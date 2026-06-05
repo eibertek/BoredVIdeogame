@@ -4,6 +4,7 @@ import {
   GAME_WIDTH, GAME_HEIGHT,
   PLAYER_SPEED, NPC_SPEED, INTERACTION_DIST, T,
 } from '../constants';
+import { touchInput } from '../touchInput';
 import { MAP_DATA, isSolid, getAreaName } from '../mapData';
 import { CHARACTERS, getCharacter, type CharConfig } from '../characters';
 import { type CustomerDef, EV } from '../types/customer';
@@ -198,24 +199,25 @@ export class OfficeScene extends Phaser.Scene {
       D: this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.D),
     };
 
-    this.input.keyboard!.on('keydown-E', () => {
-      if (this.counterActive) return;
-      if (this.dialogueOpen) {
-        this.advanceDialogue();
-      } else if (this.nearbyNPC) {
-        const npc = this.nearbyNPC;
-        if (COUNTER_CUSTOMER_IDS.has(npc.config.id) && this.isPlayerAtCounter()) {
-          this.openCounterInteraction(npc);
-        } else {
-          this.openDialogue(npc);
-        }
-      }
-    });
-
+    this.input.keyboard!.on('keydown-E', () => this.handleInteract());
     this.input.keyboard!.on('keydown-SPACE', () => {
       if (this.counterActive) return;
       if (this.dialogueOpen) this.advanceDialogue();
     });
+  }
+
+  private handleInteract() {
+    if (this.counterActive) return;
+    if (this.dialogueOpen) {
+      this.advanceDialogue();
+    } else if (this.nearbyNPC) {
+      const npc = this.nearbyNPC;
+      if (COUNTER_CUSTOMER_IDS.has(npc.config.id) && this.isPlayerAtCounter()) {
+        this.openCounterInteraction(npc);
+      } else {
+        this.openDialogue(npc);
+      }
+    }
   }
 
   // ── UI ────────────────────────────────────────────────────────────────────
@@ -268,9 +270,12 @@ export class OfficeScene extends Phaser.Scene {
         backgroundColor: '#00000080', padding: { x: 6, y: 3 },
       }).setOrigin(0, 0).setScrollFactor(0).setDepth(20);
 
-    this.add.text(10, GAME_HEIGHT - 10, 'WASD / Arrows: Move  |  E: Talk', {
-      fontSize: '9px', fontFamily: 'monospace', color: '#666666',
-    }).setOrigin(0, 1).setScrollFactor(0).setDepth(20);
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (!isTouchDevice) {
+      this.add.text(10, GAME_HEIGHT - 10, 'WASD / Arrows: Move  |  E: Talk', {
+        fontSize: '9px', fontFamily: 'monospace', color: '#666666',
+      }).setOrigin(0, 1).setScrollFactor(0).setDepth(20);
+    }
   }
 
   // ── Dialogue ──────────────────────────────────────────────────────────────
@@ -346,6 +351,10 @@ export class OfficeScene extends Phaser.Scene {
   // ── Update ────────────────────────────────────────────────────────────────
 
   update(_time: number, delta: number) {
+    if (touchInput.interactTap) {
+      touchInput.interactTap = false;
+      this.handleInteract();
+    }
     if (!this.dialogueOpen && !this.counterActive) this.handlePlayerMovement();
     this.updateNPCs(delta);
     this.updateNameTags();
@@ -356,10 +365,10 @@ export class OfficeScene extends Phaser.Scene {
   private handlePlayerMovement() {
     const speed = PLAYER_SPEED;
     let vx = 0, vy = 0;
-    const left = this.cursors.left.isDown || this.wasd.A.isDown;
-    const right = this.cursors.right.isDown || this.wasd.D.isDown;
-    const up = this.cursors.up.isDown || this.wasd.W.isDown;
-    const down = this.cursors.down.isDown || this.wasd.S.isDown;
+    const left  = this.cursors.left.isDown  || this.wasd.A.isDown || touchInput.left;
+    const right = this.cursors.right.isDown || this.wasd.D.isDown || touchInput.right;
+    const up    = this.cursors.up.isDown    || this.wasd.W.isDown || touchInput.up;
+    const down  = this.cursors.down.isDown  || this.wasd.S.isDown || touchInput.down;
 
     if (left) { vx = -speed; this.playerDir = 'left'; }
     else if (right) { vx = speed; this.playerDir = 'right'; }
