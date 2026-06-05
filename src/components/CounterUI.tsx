@@ -324,14 +324,13 @@ export default function CounterUI({ game }: Props) {
             {exchange.exchange.responses.map((opt, i) => {
               const isChosen = chosen === i;
               const isDisabled = chosen !== null;
-              const sign = opt.delta >= 0 ? '+' : '';
               return (
                 <button
                   key={i}
                   onClick={() => sendResponse(i)}
                   disabled={isDisabled}
                   className={`
-                    flex items-center justify-between gap-3 px-4 py-2.5 rounded-lg border text-left
+                    flex items-center px-4 py-2.5 rounded-lg border text-left
                     font-mono text-sm transition-all duration-150
                     ${isChosen
                       ? 'bg-[#4a90d9]/30 border-[#4fc3f7] text-white'
@@ -341,15 +340,6 @@ export default function CounterUI({ game }: Props) {
                   `}
                 >
                   <span className="flex-1 leading-snug">{opt.text}</span>
-                  <span
-                    className={`shrink-0 text-xs font-bold px-2 py-0.5 rounded border ${
-                      opt.delta >= 0
-                        ? 'text-green-300 border-green-700 bg-green-950'
-                        : 'text-red-300 border-red-700 bg-red-950'
-                    }`}
-                  >
-                    {sign}{opt.delta}
-                  </span>
                 </button>
               );
             })}
