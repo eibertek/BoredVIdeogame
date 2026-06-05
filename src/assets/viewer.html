@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sprite Viewer - RPG Store</title>
+<style>
+  body{margin:0;background:#1a1a22;color:#e8e8f0;font-family:system-ui,sans-serif;padding:20px;}
+  h1{font-size:18px;font-weight:600;}
+  .controls{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0;}
+  button{background:#2c2c3a;color:#e8e8f0;border:1px solid #44445a;border-radius:8px;
+         padding:8px 14px;cursor:pointer;font-size:13px;}
+  button.active{background:#5a5ad8;border-color:#7a7af0;}
+  .grid{display:flex;gap:24px;flex-wrap:wrap;}
+  .card{background:#23232e;border:1px solid #34344a;border-radius:12px;padding:16px;
+        display:flex;flex-direction:column;align-items:center;gap:8px;}
+  canvas{image-rendering:pixelated;background:#15151c;border-radius:6px;width:144px;height:144px;}
+  .name{font-size:13px;text-transform:capitalize;color:#bcbcd0;}
+  .role{font-size:11px;color:#7a7a92;}
+</style>
+</head>
+<body>
+<h1>Sprite Viewer — live animations</h1>
+<div class="controls" id="anim"></div>
+<div class="controls" id="dir"></div>
+<div class="grid" id="grid"></div>
+<script>
+const ROLES={rowan:"Manager",alan:"Sales Rep",adam:"Sales Rep",ellie:"Store Manager",amish:"IT & Sales",ben:"VIP Customer"};
+let META=null, anim="walk", dir="down", t=0;
+const cvs={};
+
+async function init(){
+  META=await (await fetch('metadata.json')).json();
+  const order=Object.keys(META.characters);
+  // animation buttons
+  Object.keys(META.meta.animations).forEach(a=>{
+    const b=document.createElement('button');b.textContent=a;b.onclick=()=>{anim=a;upd('anim',b);};
+    if(a===anim)b.classList.add('active');document.getElementById('anim').appendChild(b);
+  });
+  META.meta.directions.forEach(d=>{
+    const b=document.createElement('button');b.textContent=d;b.onclick=()=>{dir=d;upd('dir',b);};
+    if(d===dir)b.classList.add('active');document.getElementById('dir').appendChild(b);
+  });
+  for(const name of order){
+    const c=META.characters[name];
+    const card=document.createElement('div');card.className='card';
+    const cv=document.createElement('canvas');cv.width=48;cv.height=48;
+    const img=new Image();img.src=c.sheet;
+    cvs[name]={cv,ctx:cv.getContext('2d'),img};
+    card.appendChild(cv);
+    const n=document.createElement('div');n.className='name';n.textContent=name;
+    const r=document.createElement('div');r.className='role';r.textContent=ROLES[name]||'';
+    card.appendChild(n);card.appendChild(r);
+    document.getElementById('grid').appendChild(card);
+  }
+  requestAnimationFrame(loop);
+}
+function upd(group,btn){
+  document.getElementById(group).querySelectorAll('button').forEach(x=>x.classList.remove('active'));
+  btn.classList.add('active');
+}
+function loop(ts){
+  const frame=Math.floor(ts/180)%4;
+  for(const name in cvs){
+    const {cv,ctx,img}=cvs[name];
+    const a=META.characters[name].animations[anim+'_'+dir];
+    if(!img.complete||!a){requestAnimationFrame(loop);return;}
+    ctx.clearRect(0,0,48,48);
+    const fr=Math.min(frame,a.frames-1);
+    const [sx,sy,sw,sh]=a.rects[fr];
+    ctx.drawImage(img,sx,sy,sw,sh,0,0,48,48);
+  }
+  requestAnimationFrame(loop);
+}
+init();
+</script>
+</body>
+</html>
