@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mv /Users/marianoeiberman/projects/BoredVIdeogame/public/assets/characters/amish_sheet.png /Users/marianoeiberman/projects/BoredVIdeogame/public/assets/characters/hamish_sheet.png)",
+      "Bash(grep -n \"^  id:\\\\|^  {$\\\\|^export\" /Users/marianoeiberman/projects/BoredVIdeogame/src/game/characters.ts)",
+      "Bash(git -C /Users/marianoeiberman/projects/BoredVIdeogame diff src/game/characters.ts src/game/scenes/BootScene.ts src/game/scenes/OfficeScene.ts)"
+    ],
+    "additionalDirectories": [
+      "/Users/marianoeiberman/projects/BoredVIdeogame/public/assets/characters"
+    ]
+  }
+}

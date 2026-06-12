@@ -2106,9 +2106,9 @@
         }
       }
     },
-    "amish": {
-      "sheet": "amish_sheet.png",
-      "preview": "amish_sheet@4x.png",
+    "hamish": {
+      "sheet": "hamish_sheet.png",
+      "preview": "hamish_sheet@4x.png",
       "animations": {
         "walk_down": {
           "row": 0,

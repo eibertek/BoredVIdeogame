@@ -307,7 +307,7 @@ export default function CounterUI({ game }: Props) {
           {/* Customer dialogue line */}
           <div className="flex items-start gap-3 mb-4">
             <div className="shrink-0 w-10 h-10 rounded-full bg-gray-800 border border-gray-600 flex items-center justify-center text-lg">
-              {exchange.customerName === 'Ben' ? '🧳' : exchange.customerName === 'Amish' ? '🔧' : '🙋'}
+              {exchange.customerName === 'Ben' ? '🧳' : exchange.customerName === 'Hamish' ? '🔧' : '🙋'}
             </div>
             <div>
               <span className="text-[#4fc3f7] text-xs font-mono font-bold block mb-1">

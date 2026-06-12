@@ -20,7 +20,7 @@ const IDLE_FRAME: Record<string, number> = {
 // IDs that have counter-service dialogue trees (in dialogues.ts CUSTOMERS)
 const COUNTER_CUSTOMER_IDS = new Set(CUSTOMERS.map(c => c.id));
 // Counter staff zone — player must be here to trigger the counter mechanic
-const STAFF_COL_MIN = 2, STAFF_COL_MAX = 12;
+const STAFF_COL_MIN = 4, STAFF_COL_MAX = 13;
 const STAFF_ROW_MIN = 10, STAFF_ROW_MAX = 13;
 // Store exit — customers walk here then disappear
 const EXIT_COL = 19, EXIT_ROW = 27;
@@ -508,7 +508,8 @@ export class OfficeScene extends Phaser.Scene {
     npc.moving = true;
     npc.direction = Math.abs(dx) > Math.abs(dy)
       ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'down' : 'up');
-    npc.sprite.anims.play(`${npc.config.id}-walk-${npc.direction}`, true);
+    const walkKey = `${npc.config.id}-walk-${npc.direction}`;
+    if (this.anims.exists(walkKey)) npc.sprite.anims.play(walkKey, true);
   }
 
   private tileToWorld(col: number, row: number) {

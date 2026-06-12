@@ -6,7 +6,7 @@ they are generic archetypes you can freely use and modify in your game.
 
 ## Contents
 
-For each character (`rowan`, `alan`, `adam`, `ellie`, `amish`, `ben`):
+For each character (`rowan`, `alan`, `adam`, `ellie`, `hamish`, `ben`):
 
 - `<name>_sheet.png` — spritesheet, cells of **48×48 px**
 - `<name>_sheet@4x.png` — ×4 version for preview only
@@ -45,7 +45,7 @@ To get the rectangle of a frame:
 | `talk`    | 4 | Talking (mouth open/closed for dialogues) |
 
 Each character has their own magic colour (Rowan purple, Alan orange,
-Adam cyan, Ellie green, Amish gold, Ben red).
+Adam cyan, Ellie green, Hamish gold, Ben red).
 
 ## How to use in an engine
 

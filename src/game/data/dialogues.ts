@@ -6,12 +6,12 @@ import type { CustomerDef } from '../types/customer';
 // ──────────────────────────────────────────────────────────────────────────────
 
 export const CUSTOMERS: CustomerDef[] = [
-  // ── AMISH (Easy) ────────────────────────────────────────────────────────────
+  // ── hamish (Easy) ────────────────────────────────────────────────────────────
   {
-    id: 'amish',
-    name: 'Amish',
+    id: 'hamish',
+    name: 'Hamish',
     difficulty: 'easy',
-    sprite: 'amish',
+    sprite: 'hamish',
     scoreRange: [50, 80],
     successThreshold: 120,
     closingThreshold: 80,
@@ -22,7 +22,7 @@ export const CUSTOMERS: CustomerDef[] = [
           {
             text: 'We have options from $15 to $80 depending on the features.',
             delta: 20,
-            flavourText: 'Amish nods with interest.',
+            flavourText: 'Hamish nods with interest.',
           },
           {
             text: "What do you need it for? That way I can recommend the best one.",
@@ -33,7 +33,7 @@ export const CUSTOMERS: CustomerDef[] = [
           {
             text: "They're all the same, just pick whichever.",
             delta: -15,
-            flavourText: 'Amish frowns.',
+            flavourText: 'Hamish frowns.',
           },
         ],
       },
@@ -43,7 +43,7 @@ export const CUSTOMERS: CustomerDef[] = [
           {
             text: 'Of course! The Logitech wireless is $35 and comes with 18 months warranty.',
             delta: 25,
-            flavourText: 'Amish smiles hearing "warranty".',
+            flavourText: 'Hamish smiles hearing "warranty".',
           },
           {
             text: 'Yes, but they cost twice as much as the wired ones.',
@@ -53,7 +53,7 @@ export const CUSTOMERS: CustomerDef[] = [
           {
             text: 'Wireless has more latency, you are better off with a wired one.',
             delta: -20,
-            flavourText: 'Amish starts glancing at the door.',
+            flavourText: 'Hamish starts glancing at the door.',
           },
         ],
       },
@@ -73,18 +73,18 @@ export const CUSTOMERS: CustomerDef[] = [
             text: 'No discount, but I will throw in the mousepad for free.',
             delta: 20,
             globalBonus: 5,
-            flavourText: 'Amish accepts the deal.',
+            flavourText: 'Hamish accepts the deal.',
           },
           {
             text: 'No discounts or promos. List price only.',
             delta: -10,
-            flavourText: 'Amish sighs.',
+            flavourText: 'Hamish sighs.',
           },
         ],
       },
     ],
 
-    // ── Rowan playing vs Amish: scam mode, harder to score ──────────────────
+    // ── Rowan playing vs Hamish: scam mode, harder to score ──────────────────
     playerVariants: {
       rowan: [
         {
@@ -93,17 +93,17 @@ export const CUSTOMERS: CustomerDef[] = [
             {
               text: 'This premium model is normally $200, but TODAY only it is $80. Incredible discount.',
               delta: 15,
-              flavourText: 'Amish seems convinced... for now.',
+              flavourText: 'Hamish seems convinced... for now.',
             },
             {
               text: 'Let me just check Reddit for the current market price. One second.',
               delta: -5,
-              flavourText: 'Amish looks confused.',
+              flavourText: 'Hamish looks confused.',
             },
             {
               text: "Between you and me, this one kind of... fell off the back of a truck.",
               delta: -25,
-              flavourText: 'Amish backs away slowly.',
+              flavourText: 'Hamish backs away slowly.',
             },
           ],
         },
@@ -113,17 +113,17 @@ export const CUSTOMERS: CustomerDef[] = [
             {
               text: "I've got ONE left in the back. Special reserve. $120, but for you — $95. Don't tell the manager.",
               delta: 10,
-              flavourText: "Amish is intrigued by the 'secret deal'.",
+              flavourText: "Hamish is intrigued by the 'secret deal'.",
             },
             {
               text: "The wireless ones are... somewhere. I am more of a server guy, honestly.",
               delta: -10,
-              flavourText: 'Amish frowns.',
+              flavourText: 'Hamish frowns.',
             },
             {
               text: "Sir, I need you to promise not to look up that price online.",
               delta: -30,
-              flavourText: '"Excuse me?" Amish takes out his phone.',
+              flavourText: '"Excuse me?" Hamish takes out his phone.',
             },
           ],
         },
@@ -137,17 +137,17 @@ export const CUSTOMERS: CustomerDef[] = [
               globalBonus: 5,
               effect: 'surcharge',
               effectValue: 30,
-              flavourText: 'Amish signs without reading the fine print.',
+              flavourText: 'Hamish signs without reading the fine print.',
             },
             {
               text: "I can include a mousepad. It may have been used. Once.",
               delta: 5,
-              flavourText: 'Amish accepts, nervously.',
+              flavourText: 'Hamish accepts, nervously.',
             },
             {
               text: "Sure, combo deal — it is double the price but I call it a 'bundle premium'.",
               delta: -20,
-              flavourText: '"I am reporting this." Amish leaves a 1-star review.',
+              flavourText: '"I am reporting this." Hamish leaves a 1-star review.',
             },
           ],
         },
@@ -401,34 +401,34 @@ export interface RowanLine {
 export const ROWAN_LINES: RowanLine[] = [
   {
     text: 'Does this model have tech support? Because I AM tech support and I do not come in on weekends.',
-    penalty: 20,
+    penalty: 5,
   },
   {
     text: 'Sorry to interrupt... has anyone seen support ticket number 4,847?',
-    penalty: 15,
+    penalty: 10,
   },
   {
     text: 'That model has a known bug. Did I mention it has a bug? It has a bug.',
-    penalty: 25,
+    penalty: 6,
   },
   {
     text: 'WiFi just went down. That is me, I am rebooting the router. Five minutes.',
-    penalty: 20,
+    penalty: 8,
   },
   {
     text: "Warranty? Ahhhh, that is... complicated. I'll explain later.",
-    penalty: 15,
+    penalty: 20,
   },
   {
     text: 'Do not touch the server. I am telling you for no particular reason. Just do not.',
-    penalty: 18,
+    penalty: 12,
   },
   {
     text: 'Sure I can sell you that — I just need to check Reddit for the current market price. One second.',
-    penalty: 22,
+    penalty: 20,
   },
   {
     text: 'Actually, do not buy that model. I saw on a forum that it causes fires. Probably.',
-    penalty: 20,
+    penalty: 15,
   },
 ];

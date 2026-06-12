@@ -6,7 +6,7 @@ export const FRAME_W = 48;
 export const FRAME_H = 48;
 
 // Characters that have real PNG sprite sheets
-const PNG_CHARS = new Set(['rowan', 'alan', 'adam', 'ellie', 'amish', 'ben']);
+const PNG_CHARS = new Set(['rowan', 'alan', 'adam', 'ellie', 'hamish', 'ben']);
 
 // PNG sprite sheet row order: 0=walk_down, 1=walk_up, 2=walk_left, 3=walk_right
 // Row 12=talk_down, 13=talk_up, 14=talk_left, 15=talk_right
@@ -15,11 +15,13 @@ const PNG_CHARS = new Set(['rowan', 'alan', 'adam', 'ellie', 'amish', 'ben']);
 // Eye colours per character
 const EYE_COLORS: Record<string, number> = {
   rowan: 0x9ca3af, alan: 0x5b9bd5, adam: 0x7c5230,
-  ellie: 0x92400e, brit: 0x06b6d4, amish: 0x4a3000, ben: 0x6b7280,
+  ellie: 0x92400e, brit: 0x06b6d4, hamish: 0x4a3000, ben: 0x6b7280,
+  theo: 0x7c5230,
 };
 
 const HAIR_RADIUS: Record<string, number> = {
-  rowan: 9, alan: 12, adam: 11, ellie: 12, brit: 15, amish: 12, ben: 10,
+  rowan: 9, alan: 12, adam: 11, ellie: 12, brit: 15, hamish: 12, ben: 10,
+  theo: 14,
 };
 
 export class BootScene extends Phaser.Scene {
@@ -46,10 +48,11 @@ export class BootScene extends Phaser.Scene {
       this.createPNGAnimations(id);
     }
 
-    // Brit has no PNG — generate sprite programmatically
-    // Generated sprites: Brit (playable, no PNG) + Mariano (customer, no PNG)
-    const brit = getCharacter('brit');
-    this.generateBritTexture(brit);
+
+    // Non-PNG characters — generate sprites programmatically
+    for (const id of ['brit', 'theo']) {
+      this.generateProceduralTexture(getCharacter(id));
+    }
     this.generateMarianoTexture();
 
     const mode: string = this.registry.get('gameMode') ?? 'explore';
@@ -82,9 +85,9 @@ export class BootScene extends Phaser.Scene {
     }
   }
 
-  // ── Brit generated texture (4 cols × 4 rows, same layout as PNG) ─────
+  // ── Procedural character texture (used for non-PNG chars: Brit, Theo) ────
 
-  private generateBritTexture(c: CharConfig) {
+  private generateProceduralTexture(c: CharConfig) {
     const g = this.add.graphics();
     const dirs = ['down', 'up', 'left', 'right'];
     // PNG row order: down=row0, up=row1, left=row2, right=row3
@@ -101,7 +104,6 @@ export class BootScene extends Phaser.Scene {
     g.generateTexture(c.id, FRAME_W * 4, FRAME_H * 4);
     g.destroy();
 
-    // Add numbered frame data so generateFrameNumbers works
     const tex = this.textures.get(c.id);
     for (let row = 0; row < 4; row++) {
       for (let col = 0; col < 4; col++) {
@@ -112,7 +114,7 @@ export class BootScene extends Phaser.Scene {
     for (let row = 0; row < 4; row++) {
       const start = row * 4;
       this.anims.create({
-        key: `brit-walk-${dirs[row]}`,
+        key: `${c.id}-walk-${dirs[row]}`,
         frames: this.anims.generateFrameNumbers(c.id, { start, end: start + 3 }),
         frameRate: 8,
         repeat: -1,
@@ -438,7 +440,7 @@ export class BootScene extends Phaser.Scene {
         g.fillStyle(hc); g.fillCircle(cx - r + 3, hcy - 3, 7); g.fillCircle(cx + r - 3, hcy - 3, 7);
         g.fillStyle(hl); g.fillCircle(cx - r + 5, hcy - 5, 3); g.fillCircle(cx + r - 5, hcy - 5, 3);
         break;
-      case 'amish':
+      case 'hamish':
         g.fillStyle(0x1a1a1a); g.fillRect(cx - r + 1, oy, r * 2 - 2, 3);
         g.fillStyle(hc); g.fillRect(cx - r + 2, oy + 1, r * 2 - 4, 2);
         break;

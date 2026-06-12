@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { CHARACTERS, type CharConfig } from '@/game/characters';
 
 // Characters that can be played (Mariano is NPC-only — he appears as a customer).
-const PLAYABLE = new Set(['rowan', 'alan', 'adam', 'ellie', 'brit', 'amish', 'ben']);
+const PLAYABLE = new Set(['rowan', 'alan', 'adam', 'ellie', 'brit', 'hamish', 'ben']);
 // In counter mode only staff can be played.
 const COUNTER_PLAYABLE = new Set(['rowan', 'alan', 'adam', 'ellie', 'brit']);
 

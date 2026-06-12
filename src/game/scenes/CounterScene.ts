@@ -248,7 +248,7 @@ export class CounterScene extends Phaser.Scene {
   private walkCustomerOut(happy: boolean) {
     if (!this.customerSprite) return;
 
-    const charId = this.manager.getState()?.customer.sprite ?? 'amish';
+    const charId = this.manager.getState()?.customer.sprite ?? 'hamish';
     const anim = happy
       ? `${charId}-walk-down`
       : `${charId}-walk-down`;

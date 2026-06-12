@@ -43,7 +43,7 @@ CHARACTERS = {
         shirt_logo=(255, 255, 255, 255),
     ),
     # Cliente - ropa de calle azul, pelo medio
-    "amish": Palette(
+    "hamish": Palette(
         skin=(180, 130, 96, 255), hair=(28, 24, 22, 255),
         shirt=(56, 96, 180, 255), pants=(70, 64, 58, 255), shoe=(48, 36, 28, 255),
         hair_style="short", has_beard=True,
@@ -58,4 +58,4 @@ CHARACTERS = {
     ),
 }
 
-ORDER = ["rowan", "alan", "adam", "ellie", "amish", "ben"]
+ORDER = ["rowan", "alan", "adam", "ellie", "hamish", "ben"]
